@@ -18,7 +18,7 @@ class << self
              :chart_border, :tooltip_bg, :tooltip_text, :aqua,
              :black, :blue, :cyan, :brown, :fuchsia, :gray, :grey, :green,
              :lime, :magenta, :navy, :orange, :purple, :red, :silver, :white,
-             :yellow ]
+             :yellow, :peach ]
   ##
   # Define instance methods to read and write boolean attributes.
   def boolean *args
