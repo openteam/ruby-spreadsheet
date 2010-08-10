@@ -347,6 +347,65 @@ and minimal code that generates this warning. Thanks!
     ]
     write_op 0x0225, data.pack('v2')
   end
+  def write_page_settings
+    # TODO Other Page Settings Block options:
+    # * HORIZONTALPAGEBREAKS
+    # * VERTICALPAGEBREAKS
+    # * HEADER
+    # * FOOTER
+    # * HCENTER
+    # * VCENTER
+    # * LEFTMARGIN
+    # * RIGHTMARGIN
+    # * TOPMARGIN
+    # * BOTTOMMARGIN
+    # * PLS
+    write_pagesetup # PAGESETUP (5.73)
+    # * BITMAP
+  end
+  # PAGESETUP (5.73)
+  def write_pagesetup
+    # TODO wire up these other options (5.73). All of these commented-out
+    # options should default to false.
+
+    opts = 0
+    # opts |= 0x0001 if print_pages_in_rows?
+    opts |= 0x0002 if @worksheet.orientation == :portrait
+    # opts |= 0x0004 if page_options_uninitialized?
+    # opts |= 0x0008 if print_black_and_white?
+    # opts |= 0x0010 if print_draft_quality?
+    # opts |= 0x0020 if print_cell_notes?
+    # opts |= 0x0040 if use_default_orientation?
+    # opts |= 0x0080 if use_start_page_number?
+
+    # BIFF8+:
+    # opts |= 0x0200 if print_notes_at_end_of_sheet?
+    # case error_style
+    # when :as_displayed
+    #   # default: nothing
+    # when :hide
+    #   opts |= 0x0400
+    # when :dash
+    #   opts |= 0x0800
+    # when :na
+    #   opts |= 0x0C00
+    # end
+
+    data = [
+      1, # Paper size (0=undefined), see Paper Size Table (5.73)
+      100, # Scaling factor in percent
+      0, # Start page number
+      0, # Fit worksheet width to this number of pages (0 = use as many as needed)
+      0, # Fit worksheet height to this number of pages (0 = use as many as needed)
+      opts,
+      300, # Print resolution in dpi
+      300, # Vertical print resolution in dpi
+      0, # Header margin (TODO)
+      0, # Footer margin (TODO)
+      1 # Number of copies to print
+    ]
+    write_op opcode(:pagesetup), data.pack(binfmt(:pagesetup))
+  end
   def write_defcolwidth
     # Offset  Size  Contents
     #      0     2  Column width in characters, using the width of the zero
@@ -453,6 +512,7 @@ and minimal code that generates this warning. Thanks!
     # ○  WSBOOL ➜ 5.113
     write_wsbool
     # ○  Page Settings Block ➜ 4.4
+    write_page_settings
     # ○  Worksheet Protection Block ➜ 4.18
     # ○  DEFCOLWIDTH ➜ 5.32
     write_defcolwidth
