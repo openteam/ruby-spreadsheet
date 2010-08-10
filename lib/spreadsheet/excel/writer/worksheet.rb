@@ -860,6 +860,8 @@ and minimal code that generates this warning. Thanks!
     write_op opcode(:window2), data
   end
   def write_wsbool
+    fit_print_to_pages = (@worksheet.fit_width_to_pages ||
+                          @worksheet.fit_height_to_pages) ? 1 : 0
     bits = [
          #   Bit  Mask    Contents
       1, #     0  0x0001  0 = Do not show automatic page breaks
@@ -872,7 +874,8 @@ and minimal code that generates this warning. Thanks!
          #                1 = Outline buttons below outline group
       1, #     7  0x0080  0 = Outline buttons left of outline group
          #                1 = Outline buttons right of outline group
-      0, #     8  0x0100  0 = Scale printout in percent (➜ 6.89)
+      fit_print_to_pages,
+         #     8  0x0100  0 = Scale printout in percent (➜ 6.89)
          #                1 = Fit printout to number of pages (➜ 6.89)
       0, #     9  0x0200  0 = Save external linked values
          #                    (BIFF3-BIFF4 only, ➜ 5.10)
