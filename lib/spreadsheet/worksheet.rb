@@ -27,6 +27,7 @@ module Spreadsheet
     include Spreadsheet::Encodings
     include Enumerable
     attr_accessor :name, :selected, :workbook, :orientation
+    attr_accessor :fit_width_to_pages, :fit_height_to_pages
     attr_reader :rows, :columns
     def initialize opts={}
       @default_format = nil

@@ -395,8 +395,11 @@ and minimal code that generates this warning. Thanks!
       1, # Paper size (0=undefined), see Paper Size Table (5.73)
       100, # Scaling factor in percent
       0, # Start page number
-      0, # Fit worksheet width to this number of pages (0 = use as many as needed)
-      0, # Fit worksheet height to this number of pages (0 = use as many as needed)
+      @worksheet.fit_width_to_pages || 0, # Fit worksheet width to this number
+                                          # of pages (0 = use as many as needed)
+      @worksheet.fit_height_to_pages || 0, # Fit worksheet height to this
+                                           # number of pages (0 = use as many
+                                           # as needed)
       opts,
       300, # Print resolution in dpi
       300, # Vertical print resolution in dpi
