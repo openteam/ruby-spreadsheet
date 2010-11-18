@@ -6,11 +6,10 @@ require './lib/spreadsheet.rb'
 
 ENV['RDOCOPT'] = '-c utf8'
 
-Hoe.new('spreadsheet', Spreadsheet::VERSION) do |p|
-  # p.rubyforge_name = 'spreadsheetx' # if different than lowercase project name
+Hoe.spec :spreadsheet do |p|
    p.developer('Hannes Wyss', 'hannes.wyss@gmail.com')
    p.remote_rdoc_dir = ''
-   p.extra_deps << 'ruby-ole'
+   p.extra_deps << ['ruby-ole', '>= 0']
 end
 
 # vim: syntax=Ruby
