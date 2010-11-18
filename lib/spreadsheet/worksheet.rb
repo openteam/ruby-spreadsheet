@@ -26,12 +26,14 @@ module Spreadsheet
   class Worksheet
     include Spreadsheet::Encodings
     include Enumerable
-    attr_accessor :name, :selected, :workbook
+    attr_accessor :name, :selected, :workbook, :orientation
+    attr_accessor :fit_width_to_pages, :fit_height_to_pages
     attr_reader :rows, :columns
     def initialize opts={}
       @default_format = nil
       @selected = opts[:selected]
       @dimensions = [0,0,0,0]
+      @orientation = :portrait
       @name = opts[:name] || 'Worksheet'
       @workbook = opts[:workbook]
       @rows = []
